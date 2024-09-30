@@ -1,5 +1,13 @@
 require 'sinatra'
 
 get '/' do
-  'hello world'
+  erb :index
+end
+
+post 'success' do
+  erb :success
+end
+
+get '/:short_url' do
+  'test'
 end
