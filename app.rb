@@ -24,5 +24,10 @@ post '/shorten' do
 end
 
 get '/:short_url' do
-  'test'
+  url = URL.find(short_url: params[:short_url])
+  if url
+    redirect url.original_url
+  else
+    "URL not found"
+  end
 end
