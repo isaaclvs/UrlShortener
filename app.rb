@@ -1,4 +1,17 @@
 require 'sinatra'
+require 'sequel'
+require 'securerandom'
+
+# Conection from SQLite
+DB = Sequel.sqlite('urls.db')
+
+# Logic to shorten
+class URL < Sequel::Model(DB[:urls])  # Model from URLs
+  def self.shorten(original_url)
+    short_url = SecureRandom.hex(3)
+    create(original_url: original_url, short_url: short_url)
+  end
+end
 
 get '/' do
   erb :index
