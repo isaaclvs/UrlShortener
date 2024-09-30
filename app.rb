@@ -17,7 +17,9 @@ get '/' do
   erb :index
 end
 
-post 'success' do
+post '/shorten' do
+  url = URL.shorten(params[:original_url])
+  @short_url = "#{request.base_url}/#{url.short_url}"
   erb :success
 end
 
