@@ -1,6 +1,6 @@
-require 'sinatra'
-require 'sequel'
-require 'securerandom'
+require 'sinatra' # Framework ruby
+require 'sequel' # Orm SQLite
+require 'securerandom' # Gem for generate code aleatory
 
 # Conection from SQLite
 DB = Sequel.sqlite('urls.db')
@@ -13,16 +13,19 @@ class URL < Sequel::Model(DB[:urls])  # Model from URLs
   end
 end
 
+# Route root
 get '/' do
   erb :index
 end
 
+# Shortener url
 post '/shorten' do
   url = URL.shorten(params[:original_url])
   @short_url = "#{request.base_url}/#{url.short_url}"
   erb :success
 end
 
+# Logic to redirect
 get '/:short_url' do
   url = URL.find(short_url: params[:short_url])
   if url
